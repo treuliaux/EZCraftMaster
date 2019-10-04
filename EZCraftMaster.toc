@@ -4,4 +4,7 @@
 ## Title: |cff37c916EZ|rCraft|cffbd0f0fMaster|r
 ## Notes: Profession helper guide AddOn for World of Warcraft.
 
+libs\LibStub\LibStub.lua
+libs\Poncho\Poncho-1.0.xml
+libs\Sushi\Sushi-3.0.xml
 init.lua
