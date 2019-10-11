@@ -13,48 +13,54 @@ myHeader = SushiHeader()
 myText = SushiHeader()
 myHeader:Hide()
 
+_G["myHeader"] = myHeader
+_G["myText"] = myText
+
 mainFrame:RegisterEvent("TRADE_SKILL_SHOW")
 mainFrame:RegisterEvent("TRADE_SKILL_CLOSE")
 mainFrame:SetScript(
     "OnEvent",
     function(self, event, ...)
-		if event == "TRADE_SKILL_SHOW" then
-			local tradeskillName, currentLevel, maxLevel = GetTradeSkillLine();
-
-			myHeader:SetLabel(tradeskillName .. " " .. currentLevel .. "/" .. maxLevel)
-			myHeader:SetUnderlined(true)
-			myHeader:SetPoint("TOPLEFT", "TradeSkillFrame", "TOPRIGHT", -25, -18)
-			myHeader:SetWidth(300)
-			--			local texture = myHeader:CreateTexture('BACKGROUND')
-			--			texture:SetTexture(1, 0, 1)
-			--			texture:SetAllPoints(myHeader)
-			--			myHeader.texture = texture
-			myHeader:Show()
-
-			myText:SetText('This is the power of headers. Great for writing text and sectioning menus.')
-			myText:SetFont('GameFontHighlightSmall')
-			myText:SetPoint("TOPLEFT", "TradeSkillFrame", "TOPRIGHT", -25, -40)
-			myText:SetWidth(300)
-			myText:Show()
-
-	--		myGroup:SetWidth(150)
-	--		myGroup:SetPoint("TOPLEFT", "TradeSkillFrame", "TOPRIGHT", -30, -15)
-
-	--		mainFrame:SetPoint("TOPLEFT", "TradeSkillFrame", "TOPRIGHT", -30, -15)
-			-- print(GetTradeSkillSelectionIndex())
-			-- print(GetFirstTradeSkill())
-	--		addSkillText(mainFrame)
-			-- print(tradeskillName, currentLevel, maxLevel)
-	--		mainFrame:Show()
-		elseif event == "TRADE_SKILL_CLOSE" then
-			myHeader:Hide()
-			myText:Hide()
-		end
+      if event == "TRADE_SKILL_SHOW" then
+        showMainFrame(myHeader)
+        showText(myText)
+      elseif event == "TRADE_SKILL_CLOSE" then
+        myHeader:Hide()
+        myText:Hide()
+      end
     end
 )
 
-function addSkillText(mainFrame)
-	local tradeskillName, currentLevel, maxLevel = GetTradeSkillLine();
-	mainFrame.text:SetText(tradeskillName .. " " .. currentLevel .. "/" .. maxLevel)
+function showMainFrame(myHeader)
+  local tradeskillName, currentLevel, maxLevel = GetTradeSkillLine();
+  myHeader:SetLabel(tradeskillName .. " " .. currentLevel .. "/" .. maxLevel)
+  myHeader:SetUnderlined(true)
+  myHeader:SetPoint("TOPLEFT", "TradeSkillFrame", "TOPRIGHT", -25, -18)
+  myHeader:SetWidth(300)
+  myHeader:Show()
 end
 
+function showText(myText)
+
+  local backdrop = {
+    bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+    edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+    edgeSize = 1,
+    tile = false,
+    tileSize = 0,
+    insets = {
+        left = 0,
+        right = 0,
+        top = 1,
+        bottom = -400,
+    },
+  }
+
+  myText:SetText('This is the power of headers. Great for writing text and sectioning menus.')
+  myText:SetFont('GameFontHighlightSmall')
+  myText:SetPoint("TOPLEFT", "TradeSkillFrame", "TOPRIGHT", -25, -40)
+  myText:SetWidth(300)
+  myText:SetHeight(800)
+  myText:SetBackdrop(backdrop)
+  myText:Show()
+end 
